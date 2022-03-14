@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dao.ProductDao">
+    <select id="SelectProductsByConditions" resultType="com.project.model.Product">
+        select * from product
+        <where>
+            <if test="product.productid != null and product.productid != ''">
+                and productid=#{product.productid}
+            </if>
+            <if test="product.product_name != null and product.product_name != ''">
+                and product_name=#{product.product_name}
+            </if>
+            <if test="timeType != null and timeType == 'in' and startTime != null and endTime != null">
+                and in_time &gt;= #{startTime} and in_time &lt;= #{endTime}
+            </if>
+            <if test="product.in_userid != null">
+                and in_userid=#{product.in_userid}
+            </if>
+            <if test="product.in_name != null and product.in_name != ''">
+                and in_name=#{product.in_name}
+            </if>
+            <if test="timeType != null and timeType == 'out' and startTime != null and endTime != null">
+                and out_time &gt;= #{startTime} and out_time &lt;= #{endTime}
+            </if>
+            <if test="product.out_userid != null">
+                and out_userid=#{product.out_userid}
+            </if>
+            <if test="product.out_name != null and product.out_name != ''">
+                and out_name = #{product.out_name}
+            </if>
+            <if test="product.out_object_userid != null">
+                and out_object_userid = #{product.out_object_userid}
+            </if>
+            <if test="product.out_object_name != null and product.out_object_name != ''">
+                and out_object_name = #{product.out_object_name}
+            </if>
+            <if test="timeType != null and timeType == 'install' and startTime != null and endTime != null">
+                and install_time &gt;= #{startTime} and install_time &lt;= #{endTime}
+            </if>
+            <if test="product.install_province != null and product.install_province != ''">
+                and install_province = #{product.install_province}
+            </if>
+            <if test="product.install_city != null and product.install_city != ''">
+                and install_city=#{product.install_city}
+            </if>
+            <if test="product.install_district != null and product.install_district != ''">
+                and install_district=#{product.install_district}
+            </if>
+            <if test="product.install_detail_address != null and product.install_detail_address != ''">
+                and install_detail_address like #{product.install_detail_address}
+            </if>
+            <if test="product.install_agent_userid != null">
+                and install_agent_userid=#{product.install_agent_userid}
+            </if>
+            <if test="product.install_agent_name != null and product.install_agent_name != ''">
+                and install_agent_name like #{product.install_agent_name}
+            </if>
+            <if test="product.customer_name != null and product.customer_name != ''">
+                and customer_name like #{product.customer_name}
+            </if>
+            <if test="product.customer_phone != null and product.customer_phone != ''">
+                and customer_phone like #{product.customer_phone}
+            </if>
+            <if test="product.is_complete_install_fee != null and product.is_complete_install_fee != ''">
+                and is_complete_install_fee = #{product.is_complete_install_fee}
+            </if>
+            <if test="timeType != null and timeType == 'fee' and startTime != null and endTime != null">
+                and fee_time &gt;= #{startTime} and fee_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+    <update id="UpdateProduct" parameterType="com.project.model.Product">
+        update product
+        <set>
+            <if test="product_name != null and product_name != ''">
+                product_name=#{product_name},
+            </if>
+            <if test="other_info != null and other_info != ''">
+                other_info=#{other_info},
+            </if>
+            <if test="in_time != null and in_time != ''">
+                in_time = NOW(),
+            </if>
+            <if test="in_userid != null">
+                in_userid=#{in_userid},
+            </if>
+            <if test="in_name != null and in_name != ''">
+                in_name=#{in_name},
+            </if>
+            <if test="out_time != null and out_time != ''">
+                out_time = NOW(),
+            </if>
+            <if test="out_userid != null">
+                out_userid=#{out_userid},
+            </if>
+            <if test="out_name != null and out_name != ''">
+                out_name = #{out_name},
+            </if>
+            <if test="out_object_userid != null">
+                out_object_userid = #{out_object_userid},
+            </if>
+            <if test="out_object_name != null and out_object_name != ''">
+                out_object_name = #{out_object_name},
+            </if>
+            <if test="install_time != null and install_time != ''">
+                install_time = NOW(),
+            </if>
+            <if test="install_province != null and install_province != ''">
+                install_province = #{install_province},
+            </if>
+            <if test="install_city != null and install_city != ''">
+                install_city=#{install_city},
+            </if>
+            <if test="install_district != null and install_district != ''">
+                install_district=#{install_district},
+            </if>
+            <if test="install_detail_address != null and install_detail_address != ''">
+                install_detail_address = #{install_detail_address},
+            </if>
+            <if test="install_picture != null and install_picture != ''">
+                install_picture = #{install_picture},
+            </if>
+            <if test="install_agent_userid != null">
+                install_agent_userid=#{install_agent_userid},
+            </if>
+            <if test="install_agent_name != null and install_agent_name != ''">
+                install_agent_name = #{install_agent_name},
+            </if>
+            <if test="customer_name != null and customer_name != ''">
+                customer_name = #{customer_name},
+            </if>
+            <if test="customer_phone != null and customer_phone != ''">
+                customer_phone = #{customer_phone},
+            </if>
+            <if test="is_complete_install_fee != null and is_complete_install_fee != ''">
+                is_complete_install_fee = #{is_complete_install_fee},
+            </if>
+            <if test="is_complete_install_fee == 'Yes'">
+                fee_time = NOW(),
+            </if>
+        </set>
+        <where>
+            productid = #{productid}
+        </where>
+    </update>
+</mapper>
